@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Enemy
   - Hero
+  - Drop Zone A
+  - Enemy Base
   layers:
   - Default
   - TransparentFX
@@ -14,7 +16,7 @@ TagManager:
   - Water
   - UI
   - Enemy
-  - 
+  - Drop Zone
   - 
   - 
   - 

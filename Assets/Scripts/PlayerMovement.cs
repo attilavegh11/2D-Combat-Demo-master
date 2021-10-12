@@ -5,8 +5,20 @@ using Spine.Unity;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Properties")]
+    public float moveSpeed = 2f;
+    public float fightDistance = 2f;
+    public float eyesightDistance = 20f;
+    public GameObject eyesightPoint;
+    public LayerMask layerMask;
+
+    /*[Header("Collission")]
+    public Collider2D defaultCollider;
+    public Collider2D combatCollider;*/
+
+    [Header("Animation")]
     public SkeletonAnimation skeletonAnimation;
-    public AnimationReferenceAsset idle, walking;
+    public AnimationReferenceAsset idle, walking, attack;
     public string currentState;
     public float speed;
     public float movement;
@@ -17,8 +29,11 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //defaultCollider.enabled = true;
+        //combatCollider.enabled = false;
+        
         rigidbody = GetComponent<Rigidbody2D>();
-        currentState = "Idle";
+        currentState = "Walking";
         SetCharacterState(currentState);
     }
 
@@ -42,35 +57,53 @@ public class PlayerMovement : MonoBehaviour
     //checks character state and sets the animation accordingly
     public void SetCharacterState(string state)
     {
-        if (state.Equals("Idle"))
-        {
-            SetAnimation(idle, true, 1f);
-        }
-        else if (state.Equals("Walking"))
+        if (state.Equals("Walking"))
         {
             SetAnimation(walking, true, 1f);
+            //defaultCollider.enabled = true;
+            //combatCollider.enabled = false;
+        }
+        else if (state.Equals("Attack"))
+        {
+            SetAnimation(attack, true, 1f);
+            //defaultCollider.enabled = false;
+            //combatCollider.enabled = true;
         }
     }
 
     public void Move()
     {
-        movement = Input.GetAxis("Horizontal");
-        rigidbody.velocity = new Vector2(movement * speed, rigidbody.velocity.y);
-        if (movement!= 0)
+        RaycastHit2D hit = Physics2D.Raycast(eyesightPoint.transform.position, Vector2.right, eyesightDistance, layerMask);
+        Debug.DrawRay(eyesightPoint.transform.position, transform.right * eyesightDistance, Color.green);
+        if (hit.collider != null)
         {
-            SetCharacterState("Walking");
-            if (movement > 0)
+            Debug.Log(hit.collider.gameObject.name);
+            if (hit.collider.gameObject.tag == "Enemy" || hit.collider.gameObject.tag == "Enemy Base")
             {
-                transform.localScale = new Vector2(0.2f, 0.2f);
+                if (!WithinRadius(hit.collider.gameObject))
+                {
+                    //move towards
+                    float steps = moveSpeed * Time.deltaTime;
+                    transform.position = Vector2.MoveTowards(transform.position, hit.collider.gameObject.transform.position, steps);
+                }
+                else
+                {
+                    //start attacking
+                    SetCharacterState("Attack");
+                }
             }
-            else
-            {
-                transform.localScale = new Vector2(-0.2f, 0.2f);
-            }
+        }
+    }
+
+    bool WithinRadius(GameObject enemy)
+    {
+        if (Vector2.Distance(transform.position, enemy.transform.position) < fightDistance)
+        {
+            return true;
         }
         else
         {
-            SetCharacterState("Idle");
+            return false;
         }
     }
 }
