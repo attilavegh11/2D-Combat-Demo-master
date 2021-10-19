@@ -23,8 +23,9 @@ public class PlayerMovement : MonoBehaviour
     public float speed;
     public float movement;
     private Rigidbody2D rigidbody;
-    public string currentAnimation;    
-    
+    public string currentAnimation;
+
+    private bool isAttacking;
     
     // Start is called before the first frame update
     void Start()
@@ -77,20 +78,27 @@ public class PlayerMovement : MonoBehaviour
         Debug.DrawRay(eyesightPoint.transform.position, transform.right * eyesightDistance, Color.green);
         if (hit.collider != null)
         {
-            Debug.Log(hit.collider.gameObject.name);
             if (hit.collider.gameObject.tag == "Enemy" || hit.collider.gameObject.tag == "Enemy Base")
             {
                 if (!WithinRadius(hit.collider.gameObject))
                 {
-                    //move towards
-                    float steps = moveSpeed * Time.deltaTime;
-                    transform.position = Vector2.MoveTowards(transform.position, hit.collider.gameObject.transform.position, steps);
+                    if (!isAttacking)
+                    {
+                        //move towards
+                        float steps = moveSpeed * Time.deltaTime;
+                        transform.position = Vector2.MoveTowards(transform.position, hit.collider.gameObject.transform.position, steps);
+                    }
                 }
                 else
                 {
                     //start attacking
                     SetCharacterState("Attack");
+                    isAttacking = true;
                 }
+            }
+            else
+            {
+                isAttacking = false;
             }
         }
     }

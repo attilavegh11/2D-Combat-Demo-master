@@ -8,6 +8,7 @@ TagManager:
   - Hero
   - Drop Zone A
   - Enemy Base
+  - Hero Base
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - UI
   - Enemy
   - Drop Zone
-  - 
+  - Hero
   - 
   - 
   - 
