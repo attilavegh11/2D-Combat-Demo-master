@@ -7,12 +7,14 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemyPrefab;
     public float minSpawnDelay = 3f;
     public float maxSpawnDelay = 6f;
+    public int maxEnemies = 3;
 
     private float spawnTimer = 0;
     private float waitTimer = 0;
     private float spawnAt = 0; //random spawn time
     private float waitFor = 0; //random wait value
     private bool spawning;
+    private int enemyCounter;
 
     void Start()
     {
@@ -57,7 +59,19 @@ public class EnemySpawner : MonoBehaviour
 
     void Spawn()
     {
-        Instantiate(enemyPrefab, transform.position, enemyPrefab.transform.rotation);
-        spawning = false;
+        if (enemyCounter < maxEnemies)
+        {
+            Instantiate(enemyPrefab, transform.position, enemyPrefab.transform.rotation);
+            spawning = false;
+            enemyCounter += 1;
+        }
+    }
+
+    public void OnEnemyKilled()
+    {
+        if (enemyCounter > 0)
+        {
+            enemyCounter -= 1;
+        }
     }
 }

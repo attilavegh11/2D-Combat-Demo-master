@@ -9,6 +9,8 @@ TagManager:
   - Drop Zone A
   - Enemy Base
   - Hero Base
+  - Hero Fist
+  - Enemy Fist
   layers:
   - Default
   - TransparentFX

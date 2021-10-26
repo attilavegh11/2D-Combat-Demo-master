@@ -9,8 +9,11 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = 2f;
     public float fightDistance = 2f;
     public float eyesightDistance = 20f;
+    public float attackFrequency = 1f;
+
     public GameObject eyesightPoint;
     public LayerMask layerMask;
+    public Fist fist;
 
     /*[Header("Collission")]
     public Collider2D defaultCollider;
@@ -26,13 +29,10 @@ public class PlayerMovement : MonoBehaviour
     public string currentAnimation;
 
     private bool isAttacking;
-    
+
     // Start is called before the first frame update
     void Start()
     {
-        //defaultCollider.enabled = true;
-        //combatCollider.enabled = false;
-        
         rigidbody = GetComponent<Rigidbody2D>();
         currentState = "Walking";
         SetCharacterState(currentState);
@@ -61,14 +61,10 @@ public class PlayerMovement : MonoBehaviour
         if (state.Equals("Walking"))
         {
             SetAnimation(walking, true, 1f);
-            //defaultCollider.enabled = true;
-            //combatCollider.enabled = false;
         }
         else if (state.Equals("Attack"))
         {
             SetAnimation(attack, true, 1f);
-            //defaultCollider.enabled = false;
-            //combatCollider.enabled = true;
         }
     }
 
@@ -80,14 +76,19 @@ public class PlayerMovement : MonoBehaviour
         {
             if (hit.collider.gameObject.tag == "Enemy" || hit.collider.gameObject.tag == "Enemy Base")
             {
-                if (!WithinRadius(hit.collider.gameObject))
+                //assign enemy to fist if there's no enemy in target
+                if (fist.enemyInfront == null)
                 {
-                    if (!isAttacking)
-                    {
-                        //move towards
-                        float steps = moveSpeed * Time.deltaTime;
-                        transform.position = Vector2.MoveTowards(transform.position, hit.collider.gameObject.transform.position, steps);
-                    }
+                    fist.enemyInfront = hit.collider.gameObject;
+                }
+
+                if (!WithinRadius(fist.enemyInfront))
+                {
+                    //move towards
+                    float steps = moveSpeed * Time.deltaTime;
+                    transform.position = Vector2.MoveTowards(transform.position, fist.enemyInfront.transform.position, steps);
+
+                    StartWalking();
                 }
                 else
                 {
@@ -99,8 +100,15 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 isAttacking = false;
+                StartWalking();
             }
         }
+    }
+
+    void StartWalking()
+    {
+        currentState = "Walking";
+        SetCharacterState(currentState);
     }
 
     bool WithinRadius(GameObject enemy)

@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     public float eyesightDistance = 20f;
     public GameObject eyesightPoint;
     public LayerMask layerMask;
+    public Fist fist;
 
     [Header("Animation")]
     public SkeletonAnimation skeletonAnimation;
@@ -71,14 +72,19 @@ public class Enemy : MonoBehaviour
         {
             if (hit.collider.gameObject.tag == "Hero" || hit.collider.gameObject.tag == "Hero Base")
             {
-                if (!WithinRadius(hit.collider.gameObject))
+                //assign enemy to fist if there's no enemy in target
+                if (fist.enemyInfront == null)
                 {
-                    if (!isAttacking)
-                    {
-                        //move towards
-                        float steps = moveSpeed * Time.deltaTime;
-                        transform.position = Vector2.MoveTowards(transform.position, hit.collider.gameObject.transform.position, steps);
-                    }
+                    fist.enemyInfront = hit.collider.gameObject;
+                }
+
+                if (!WithinRadius(fist.enemyInfront))
+                {
+                    //move towards
+                    float steps = moveSpeed * Time.deltaTime;
+                    transform.position = Vector2.MoveTowards(transform.position, fist.enemyInfront.transform.position, steps);
+
+                    StartWalking();
                 }
                 else
                 {
@@ -90,8 +96,15 @@ public class Enemy : MonoBehaviour
             else
             {
                 isAttacking = false;
+                StartWalking();
             }
         }
+    }
+
+    void StartWalking()
+    {
+        currentState = "Walking";
+        SetCharacterState(currentState);
     }
 
     bool WithinRadius(GameObject enemy)
@@ -103,16 +116,6 @@ public class Enemy : MonoBehaviour
         else
         {
             return false;
-        }
-    }
-
-    //temporary. move this method to a new class called Fist
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log(collision.gameObject.tag);
-        if (collision.gameObject.tag == "Hero")
-        {
-            collision.gameObject.GetComponent<Health>().TakeDamage(10);
         }
     }
 }

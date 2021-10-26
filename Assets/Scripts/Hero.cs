@@ -50,12 +50,4 @@ public class Hero : MonoBehaviour
             return false;
         }
     }
-
-    /*private void OnTriggerEnter(Collider collision)
-    {
-        if (collision.gameObject.tag == "Enemy")
-        {
-            Debug.Log("Took damage");
-        }
-    }*/
 }

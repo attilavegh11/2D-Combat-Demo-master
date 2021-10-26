@@ -6,8 +6,10 @@ using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
-    public float health = 100f;
+    public float maxHealth = 100f;
     public Slider healthBar;
+
+    float health;
 
     void Start()
     {
@@ -16,15 +18,16 @@ public class Health : MonoBehaviour
 
     private void SetDefaults()
     {
-        healthBar.value = health / 100;
+        health = maxHealth;
+        healthBar.value = health / maxHealth;
     }
 
     public void TakeDamage(float damageAmount)
     {
         if (health > damageAmount)
         {
-            health -= damageAmount;
-            healthBar.value = health / 100;
+            health = health - damageAmount;
+            healthBar.value = health / maxHealth;
         }
         else
         {
