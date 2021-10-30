@@ -1,5 +1,111 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1488176428
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1488176429}
+  - component: {fileID: 1488176430}
+  - component: {fileID: 1488176432}
+  - component: {fileID: 1488176431}
+  - component: {fileID: 1488176433}
+  m_Layer: 8
+  m_Name: Fist
+  m_TagString: Hero Fist
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1488176429
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488176428}
+  m_LocalRotation: {x: 0, y: 0, z: -0.24877448, w: 0.9685615}
+  m_LocalPosition: {x: -3.8807185, y: 2.3674212, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8824859710957827034}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1488176430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488176428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1fd8daaed7b64148a34acb96ba14ce1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skeletonRenderer: {fileID: 8824859710957827039}
+  boneName: Magma_HandR
+  followXYPosition: 1
+  followZPosition: 1
+  followBoneRotation: 1
+  followSkeletonFlip: 1
+  followLocalScale: 0
+  maintainedAxisOrientation: 1
+  initializeOnAwake: 1
+--- !u!50 &1488176432
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488176428}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &1488176431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488176428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 966be0bb843b0284f830095dce420f89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackPower: 15
+  enemyInfront: {fileID: 0}
+--- !u!58 &1488176433
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488176428}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.8339943, y: -0.073084734}
+  serializedVersion: 2
+  m_Radius: 1.9
 --- !u!1 &4606711169750932552
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,7 +115,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6137368981511270407}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Eye sight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,9 +152,9 @@ GameObject:
   - component: {fileID: 8824859710957827012}
   - component: {fileID: 8824859710957827035}
   - component: {fileID: 1325281698991441050}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hero A
-  m_TagString: Untagged
+  m_TagString: Hero
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -66,6 +172,7 @@ Transform:
   m_Children:
   - {fileID: 6137368981511270407}
   - {fileID: 7869696735545400802}
+  - {fileID: 1488176429}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -225,17 +332,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7c520cdb05f542489b8ebc6e08bab80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  fightDistance: 5
+  moveSpeed: 2
+  fightDistance: 1.8
   eyesightDistance: 20
+  attackFrequency: 2
   eyesightPoint: {fileID: 4606711169750932552}
   layerMask:
     serializedVersion: 2
     m_Bits: 64
+  fist: {fileID: 1488176431}
   skeletonAnimation: {fileID: 8824859710957827039}
   idle: {fileID: 11400000, guid: 2f25025d7f796324384ab06a9ceb1eec, type: 2}
   walking: {fileID: 11400000, guid: 54812f7516e58e2448832bb0c90649e3, type: 2}
   attack: {fileID: 11400000, guid: c64f60e30e297564ea807affaf35ec6a, type: 2}
+  death: {fileID: 11400000, guid: 8c9ce5e17890e9247ae9ac775d48d4f0, type: 2}
   currentState: 
   speed: 10
   movement: 0
@@ -252,8 +362,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c25bd8a390adb2442a187863e70d34c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  maxHealth: 100
   healthBar: {fileID: 2210619487943584364}
+  OnDestroyed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8824859710957827035}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: OnDeath
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &9098145432006147897
 PrefabInstance:
   m_ObjectHideFlags: 0

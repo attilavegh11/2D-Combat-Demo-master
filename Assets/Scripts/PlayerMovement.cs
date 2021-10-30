@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Animation")]
     public SkeletonAnimation skeletonAnimation;
-    public AnimationReferenceAsset idle, walking, attack;
+    public AnimationReferenceAsset idle, walking, attack, death;
     public string currentState;
     public float speed;
     public float movement;
@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     public string currentAnimation;
 
     private bool isAttacking;
+    private bool dead;
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +42,10 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
+        if (!dead)
+        {
+            Move();
+        }
     }
 
     //sets character animation
@@ -66,6 +70,10 @@ public class PlayerMovement : MonoBehaviour
         {
             SetAnimation(attack, true, 1f);
         }
+        else if (state.Equals("Death"))
+        {
+            SetAnimation(death, false, 1f);
+        }
     }
 
     public void Move()
@@ -77,7 +85,7 @@ public class PlayerMovement : MonoBehaviour
             if (hit.collider.gameObject.tag == "Enemy" || hit.collider.gameObject.tag == "Enemy Base")
             {
                 //assign enemy to fist if there's no enemy in target
-                if (fist.enemyInfront == null)
+                if (fist.enemyInfront == null || hit.collider.gameObject.tag == "Enemy")
                 {
                     fist.enemyInfront = hit.collider.gameObject;
                 }
@@ -121,5 +129,29 @@ public class PlayerMovement : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public void OnDeath()
+    {
+        if (dead)
+            return;
+        dead = true;
+
+        //disable all colliders
+        GetComponent<Collider2D>().enabled = false;
+        GetComponent<Rigidbody2D>().isKinematic = true;
+        GetComponent<Health>().HideHealthBar();
+        fist.enemyInfront.GetComponent<Enemy>().fist.enemyInfront = null;
+
+        currentState = "Death";
+        SetCharacterState(currentState);
+        StartCoroutine(DestroyAfterDelay());
+    }
+
+    IEnumerator DestroyAfterDelay()
+    {
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
+        yield return null;
     }
 }

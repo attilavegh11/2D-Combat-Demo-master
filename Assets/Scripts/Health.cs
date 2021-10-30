@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
     public float maxHealth = 100f;
     public Slider healthBar;
+    public UnityEvent OnDestroyed;
 
     float health;
 
@@ -32,7 +34,13 @@ public class Health : MonoBehaviour
         else
         {
             //killed
-            Destroy(gameObject);
+            if (OnDestroyed != null)
+                OnDestroyed.Invoke();
         }
+    }
+
+    public void HideHealthBar()
+    {
+        healthBar.gameObject.SetActive(false);
     }
 }

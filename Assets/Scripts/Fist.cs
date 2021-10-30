@@ -6,7 +6,7 @@ public class Fist : MonoBehaviour
 {
     [Tooltip("GameObjects with this tag will be attacked by this character")]
     public float attackPower = 10;
-    internal GameObject enemyInfront;
+    public GameObject enemyInfront;
 
     void Start()
     {

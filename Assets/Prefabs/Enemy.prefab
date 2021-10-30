@@ -208,6 +208,7 @@ MonoBehaviour:
   idle: {fileID: 11400000, guid: 2f25025d7f796324384ab06a9ceb1eec, type: 2}
   walking: {fileID: 11400000, guid: 54812f7516e58e2448832bb0c90649e3, type: 2}
   attack: {fileID: 11400000, guid: c64f60e30e297564ea807affaf35ec6a, type: 2}
+  death: {fileID: 11400000, guid: 8c9ce5e17890e9247ae9ac775d48d4f0, type: 2}
   currentState: 
   speed: 10
   movement: 0
@@ -226,6 +227,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   healthBar: {fileID: 9120123196346568213}
+  OnDestroyed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5311970328251629023}
+        m_TargetAssemblyTypeName: Enemy, Assembly-CSharp
+        m_MethodName: OnDeath
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5924546362212861895
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,7 +346,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 966be0bb843b0284f830095dce420f89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPower: 5
+  attackPower: 2
+  enemyInfront: {fileID: 0}
 --- !u!1 &8528053769404216656
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Animation")]
     public SkeletonAnimation skeletonAnimation;
-    public AnimationReferenceAsset idle, walking, attack;
+    public AnimationReferenceAsset idle, walking, attack, death;
     public string currentState;
     public float speed;
     public float movement;
@@ -25,6 +25,7 @@ public class Enemy : MonoBehaviour
     public string currentAnimation;
 
     private bool isAttacking;
+    private bool dead;
 
     void Start()
     {
@@ -35,7 +36,10 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        Move();
+        if (!dead)
+        {
+            Move();
+        }
     }
 
     public void SetAnimation(AnimationReferenceAsset animation, bool loop, float timeScale)
@@ -53,14 +57,14 @@ public class Enemy : MonoBehaviour
         if (state.Equals("Walking"))
         {
             SetAnimation(walking, true, 1f);
-            //defaultCollider.enabled = true;
-            //combatCollider.enabled = false;
         }
         else if (state.Equals("Attack"))
         {
             SetAnimation(attack, true, 1f);
-            //defaultCollider.enabled = false;
-            //combatCollider.enabled = true;
+        }
+        else if (state.Equals("Death"))
+        {
+            SetAnimation(death, false, 1f);
         }
     }
 
@@ -117,5 +121,29 @@ public class Enemy : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public void OnDeath()
+    {
+        if (dead)
+            return;
+        dead = true;
+
+        //disable all colliders
+        GetComponent<Collider2D>().enabled = false;
+        GetComponent<Rigidbody2D>().isKinematic = true;
+        GetComponent<Health>().HideHealthBar();
+        fist.enemyInfront.GetComponent<PlayerMovement>().fist.enemyInfront = null;
+
+        currentState = "Death";
+        SetCharacterState(currentState);
+        StartCoroutine(DestroyAfterDelay());
+    }
+
+    IEnumerator DestroyAfterDelay()
+    {
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
+        yield return null;
     }
 }

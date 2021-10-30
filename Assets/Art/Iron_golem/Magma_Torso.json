@@ -1,0 +1,34 @@
+{"skeleton":{"images":"images/"},
+"bones":[{"name":"root"}],
+"slots":[
+	{"name":"Magma_HandL","bone":"root","attachment":"Magma_HandL"},
+	{"name":"Magma_Torso","bone":"root","attachment":"Magma_Torso"},
+	{"name":"Magma_l_eye","bone":"root","attachment":"Magma_l_eye"},
+	{"name":"Magma_mouth","bone":"root","attachment":"Magma_mouth"},
+	{"name":"Magma_r_eye","bone":"root","attachment":"Magma_r_eye"},
+	{"name":"Magma_Face_l_brown","bone":"root","attachment":"Magma_Face_l_brown"},
+	{"name":"Magma_Face_r_brown","bone":"root","attachment":"Magma_Face_r_brown"},
+	{"name":"Magma_FootL","bone":"root","attachment":"Magma_FootL"},
+	{"name":"Magma_FootR","bone":"root","attachment":"Magma_FootR"},
+	{"name":"Magma_HandR","bone":"root","attachment":"Magma_HandR"},
+	{"name":"Magma_HeadPiece","bone":"root","attachment":"Magma_HeadPiece"},
+	{"name":"Magma_Rune","bone":"root","attachment":"Magma_Rune"}
+],
+"skins":{
+	"default":{
+		"Magma_Rune":{"Magma_Rune":{"x":-77.0000000000001,"y":478,"width":120,"height":110}},
+		"Magma_HeadPiece":{"Magma_HeadPiece":{"x":-120,"y":749,"width":346,"height":320}},
+		"Magma_HandR":{"Magma_HandR":{"x":-318,"y":188,"width":268,"height":332}},
+		"Magma_FootR":{"Magma_FootR":{"x":-116,"y":52.5,"width":168,"height":173}},
+		"Magma_FootL":{"Magma_FootL":{"x":130.5,"y":53,"width":195,"height":156}},
+		"Magma_Face_r_brown":{"Magma_Face_r_brown":{"x":-11.5000000000001,"y":411,"width":89,"height":52}},
+		"Magma_Face_l_brown":{"Magma_Face_l_brown":{"x":115.5,"y":406.5,"width":79,"height":47}},
+		"Magma_r_eye":{"Magma_r_eye":{"x":119.5,"y":340.5,"width":65,"height":103}},
+		"Magma_mouth":{"Magma_mouth":{"x":29.9999999999999,"y":235,"width":80,"height":26}},
+		"Magma_l_eye":{"Magma_l_eye":{"x":-14.5000000000001,"y":343.5,"width":71,"height":111}},
+		"Magma_Torso":{"Magma_Torso":{"x":-9.00000000000023,"y":374,"width":610,"height":478}},
+		"Magma_HandL":{"Magma_HandL":{"x":294,"y":205.5,"width":238,"height":313}}
+	}
+},
+"animations":{"animation":{}}
+}
