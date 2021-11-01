@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
     public string currentAnimation;
 
     private bool isAttacking;
-    private bool dead;
+    internal bool dead;
 
     void Start()
     {
@@ -81,6 +81,14 @@ public class Enemy : MonoBehaviour
                 {
                     fist.enemyInfront = hit.collider.gameObject;
                 }
+                else
+                {
+                    //if current target is the base but there's another enemy in front, reassign
+                    if (fist.enemyInfront.tag == "Hero Base" && hit.collider.gameObject.tag == "Hero")
+                    {
+                        fist.enemyInfront = hit.collider.gameObject;
+                    }
+                }
 
                 if (!WithinRadius(fist.enemyInfront))
                 {
@@ -125,6 +133,7 @@ public class Enemy : MonoBehaviour
 
     public void OnDeath()
     {
+        Debug.Log("Enemy OnDeath");
         if (dead)
             return;
         dead = true;

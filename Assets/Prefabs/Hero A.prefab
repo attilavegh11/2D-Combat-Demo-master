@@ -88,8 +88,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 966be0bb843b0284f830095dce420f89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPower: 15
-  enemyInfront: {fileID: 0}
+  attackPower: 2
+  characterHealth: {fileID: 1325281698991441050}
 --- !u!58 &1488176433
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -362,6 +362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c25bd8a390adb2442a187863e70d34c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   maxHealth: 100
   healthBar: {fileID: 2210619487943584364}
   OnDestroyed:
@@ -379,6 +380,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  health: 0
 --- !u!1001 &9098145432006147897
 PrefabInstance:
   m_ObjectHideFlags: 0

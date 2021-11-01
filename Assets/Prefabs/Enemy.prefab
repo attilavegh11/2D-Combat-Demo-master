@@ -225,6 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c25bd8a390adb2442a187863e70d34c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 1
   maxHealth: 100
   healthBar: {fileID: 9120123196346568213}
   OnDestroyed:
@@ -242,6 +243,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  health: 0
 --- !u!1 &5924546362212861895
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,8 +348,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 966be0bb843b0284f830095dce420f89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPower: 2
-  enemyInfront: {fileID: 0}
+  attackPower: 15
+  characterHealth: {fileID: -3956152730292572290}
 --- !u!1 &8528053769404216656
 GameObject:
   m_ObjectHideFlags: 0

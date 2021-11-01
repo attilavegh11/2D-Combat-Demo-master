@@ -5,15 +5,19 @@ using Spine.Unity;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public enum CombatType { Melee, Range }
+
     [Header("Properties")]
     public float moveSpeed = 2f;
     public float fightDistance = 2f;
     public float eyesightDistance = 20f;
     public float attackFrequency = 1f;
 
+    public CombatType combatType;
     public GameObject eyesightPoint;
     public LayerMask layerMask;
     public Fist fist;
+    public Canon canon;
 
     /*[Header("Collission")]
     public Collider2D defaultCollider;
@@ -29,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     public string currentAnimation;
 
     private bool isAttacking;
-    private bool dead;
+    internal bool dead;
 
     // Start is called before the first frame update
     void Start()
@@ -44,7 +48,16 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!dead)
         {
-            Move();
+            if (combatType == CombatType.Melee)
+            {
+                //melee
+                HandleMeleeCombat();
+            }
+            else
+            {
+                //range
+                HandleRangeCombat();
+            }
         }
     }
 
@@ -76,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void Move()
+    public void HandleMeleeCombat()
     {
         RaycastHit2D hit = Physics2D.Raycast(eyesightPoint.transform.position, Vector2.right, eyesightDistance, layerMask);
         Debug.DrawRay(eyesightPoint.transform.position, transform.right * eyesightDistance, Color.green);
@@ -85,9 +98,17 @@ public class PlayerMovement : MonoBehaviour
             if (hit.collider.gameObject.tag == "Enemy" || hit.collider.gameObject.tag == "Enemy Base")
             {
                 //assign enemy to fist if there's no enemy in target
-                if (fist.enemyInfront == null || hit.collider.gameObject.tag == "Enemy")
+                if (fist.enemyInfront == null)
                 {
                     fist.enemyInfront = hit.collider.gameObject;
+                }
+                else
+                {
+                    //if current target is the base but there's another enemy in front, reassign
+                    if (fist.enemyInfront.tag == "Enemy Base" && hit.collider.gameObject.tag == "Enemy")
+                    {
+                        fist.enemyInfront = hit.collider.gameObject;
+                    }
                 }
 
                 if (!WithinRadius(fist.enemyInfront))
@@ -95,6 +116,51 @@ public class PlayerMovement : MonoBehaviour
                     //move towards
                     float steps = moveSpeed * Time.deltaTime;
                     transform.position = Vector2.MoveTowards(transform.position, fist.enemyInfront.transform.position, steps);
+
+                    StartWalking();
+                }
+                else
+                {
+                    //start attacking
+                    SetCharacterState("Attack");
+                    isAttacking = true;
+                }
+            }
+            else
+            {
+                isAttacking = false;
+                StartWalking();
+            }
+        }
+    }
+
+    public void HandleRangeCombat()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(eyesightPoint.transform.position, Vector2.right, eyesightDistance, layerMask);
+        Debug.DrawRay(eyesightPoint.transform.position, transform.right * eyesightDistance, Color.green);
+        if (hit.collider != null)
+        {
+            if (hit.collider.gameObject.tag == "Enemy" || hit.collider.gameObject.tag == "Enemy Base")
+            {
+                //assign enemy to fist if there's no enemy in target
+                if (canon.enemyInfront == null)
+                {
+                    canon.enemyInfront = hit.collider.gameObject;
+                }
+                else
+                {
+                    //if current target is the base but there's another enemy in front, reassign
+                    if (canon.enemyInfront.tag == "Enemy Base" && hit.collider.gameObject.tag == "Enemy")
+                    {
+                        canon.enemyInfront = hit.collider.gameObject;
+                    }
+                }
+
+                if (!WithinRadius(canon.enemyInfront))
+                {
+                    //move towards
+                    float steps = moveSpeed * Time.deltaTime;
+                    transform.position = Vector2.MoveTowards(transform.position, canon.enemyInfront.transform.position, steps);
 
                     StartWalking();
                 }
@@ -133,6 +199,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnDeath()
     {
+        Debug.Log("Hero OnDeath");
         if (dead)
             return;
         dead = true;

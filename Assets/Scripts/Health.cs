@@ -7,11 +7,13 @@ using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
+    public enum Type { Hero, Enemy }
+    public Type type;
     public float maxHealth = 100f;
     public Slider healthBar;
     public UnityEvent OnDestroyed;
-
-    float health;
+    public float health;
+    internal bool dead;
 
     void Start()
     {
@@ -33,9 +35,22 @@ public class Health : MonoBehaviour
         }
         else
         {
+            dead = true;
+
             //killed
             if (OnDestroyed != null)
+            {
+                /*if(type == Type.Enemy)
+                {
+                    GetComponent<Enemy>().OnDeath();
+                }
+                else
+                {
+                    GetComponent<PlayerMovement>().OnDeath();
+                }*/
+
                 OnDestroyed.Invoke();
+            }
         }
     }
 

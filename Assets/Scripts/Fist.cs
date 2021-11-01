@@ -6,7 +6,8 @@ public class Fist : MonoBehaviour
 {
     [Tooltip("GameObjects with this tag will be attacked by this character")]
     public float attackPower = 10;
-    public GameObject enemyInfront;
+    public Health characterHealth;
+    internal GameObject enemyInfront;
 
     void Start()
     {
@@ -23,7 +24,11 @@ public class Fist : MonoBehaviour
     {
         if (other.gameObject == enemyInfront)
         {
-            other.gameObject.GetComponent<Health>().TakeDamage(attackPower);
+            //check if this attacker is alive
+            if (!characterHealth.dead)
+            {
+                other.gameObject.GetComponent<Health>().TakeDamage(attackPower);
+            }
         }
     }
 }
