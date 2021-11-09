@@ -23,5 +23,6 @@ public class Canon : MonoBehaviour
     {
         GameObject projectileInstance = Instantiate(projectilePrefab, canonHand.transform.position, Quaternion.identity);
         projectileInstance.GetComponent<Projectile>().enemyInfront = enemyInfront;
+
     }
 }

@@ -19,10 +19,6 @@ public class PlayerMovement : MonoBehaviour
     public Fist fist;
     public Canon canon;
 
-    /*[Header("Collission")]
-    public Collider2D defaultCollider;
-    public Collider2D combatCollider;*/
-
     [Header("Animation")]
     public SkeletonAnimation skeletonAnimation;
     public AnimationReferenceAsset idle, walking, attack, death;
